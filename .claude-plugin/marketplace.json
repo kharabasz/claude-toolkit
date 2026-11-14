@@ -33,6 +33,11 @@
       "name": "csharp-ls-lsp",
       "source": "./lsp/csharp-ls-lsp",
       "description": "C# code intelligence from csharp-ls, loading the solution nearest the project root and never one inside .claude/worktrees"
+    },
+    {
+      "name": "yaml-lsp",
+      "source": "./lsp/yaml-lsp",
+      "description": "YAML diagnostics from yaml-language-server, checking GitHub Actions workflows, Compose files and Dependabot config against their SchemaStore schemas"
     }
   ]
 }

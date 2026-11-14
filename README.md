@@ -62,9 +62,21 @@ Disable `csharp-lsp` if you have it, so only one server claims `.cs` files:
 claude plugin disable csharp-lsp@claude-plugins-official
 ```
 
+### yaml-lsp
+
+YAML diagnostics and hover from Red Hat's [yaml-language-server](https://github.com/redhat-developer/yaml-language-server). It validates each file against the [SchemaStore](https://www.schemastore.org/) schema its name matches: `.github/workflows/*.yml` against the GitHub Workflow schema, `compose.yml` and `compose.*.yml` against the Compose specification, and `.github/dependabot.yml` against the Dependabot schema. A misspelt key, a missing `runs-on` or a value of the wrong type then shows up after the edit instead of after a push and a CI run. Files that match no schema are checked for YAML syntax only.
+
+It downloads the SchemaStore catalog and each schema it needs when it starts, so it needs network access. Right after the server starts, its first report on a file can come before that file's schema has loaded, and so be empty. Later edits are checked against the loaded schema.
+
+It needs `yaml-language-server` on your `PATH`:
+
+```bash
+npm install -g yaml-language-server
+```
+
 ## Install
 
-At the prompt of a terminal session (swap `humanizer` for `plain-direct-voice`, `writing-quorum-review`, `chatgpt-image`, `ts7-lsp` or `csharp-ls-lsp` as needed):
+At the prompt of a terminal session (swap `humanizer` for `plain-direct-voice`, `writing-quorum-review`, `chatgpt-image`, `ts7-lsp`, `csharp-ls-lsp` or `yaml-lsp` as needed):
 
 ```
 /plugin install humanizer --marketplace kharabasz/claude-toolkit
