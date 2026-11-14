@@ -40,9 +40,31 @@ Disable `typescript-lsp` if you have it, so only one server claims `.ts` and `.j
 claude plugin disable typescript-lsp@claude-plugins-official
 ```
 
+### csharp-ls-lsp
+
+C# code intelligence from [csharp-ls](https://github.com/razzmatazz/csharp-language-server). The official `csharp-lsp` plugin starts `csharp-ls` with no solution, and `csharp-ls` then searches the whole project, `.claude/worktrees` included, and may load a worktree's copy of the solution. Files in the checkout are then outside the loaded solution and find no references. This plugin starts `csharp-ls` through a small Node launcher that:
+
+- loads the `.sln` or `.slnx` nearest the project root, at most four folders down, skipping folders that start with a dot (`.claude`, `.git`), `node_modules`, `bin`, `obj`, `packages`, `artifacts` and `TestResults`. At the same depth an `.slnx` wins over an `.sln`;
+- runs `dotnet restore` on that solution first, so a project that was never built locally, as in a fresh worktree, still resolves its references. A restore with nothing to do takes about two seconds;
+- logs its choice, and any other solutions it found, to the server's stderr.
+
+Set `CSHARP_LS_SOLUTION` to a path relative to the project root to load another solution, and `CSHARP_LS_RESTORE=0` to skip the restore, in your shell or the `env` block of `settings.json`.
+
+It needs Node.js, the .NET 10 SDK and `csharp-ls` on your `PATH`:
+
+```bash
+dotnet tool install --global csharp-ls
+```
+
+Disable `csharp-lsp` if you have it, so only one server claims `.cs` files:
+
+```bash
+claude plugin disable csharp-lsp@claude-plugins-official
+```
+
 ## Install
 
-At the prompt of a terminal session (swap `humanizer` for `plain-direct-voice`, `writing-quorum-review`, `chatgpt-image` or `ts7-lsp` as needed):
+At the prompt of a terminal session (swap `humanizer` for `plain-direct-voice`, `writing-quorum-review`, `chatgpt-image`, `ts7-lsp` or `csharp-ls-lsp` as needed):
 
 ```
 /plugin install humanizer --marketplace kharabasz/claude-toolkit
@@ -62,5 +84,11 @@ Each skill plugin lives in `skills/<name>/`, and each language server plugin in 
 
 ```bash
 claude plugin validate skills/humanizer
+```
+
+Run the launcher tests with:
+
+```bash
+node --test "lsp/**/*.test.mjs"
 ```
 

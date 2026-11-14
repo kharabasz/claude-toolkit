@@ -1,0 +1,19 @@
+{
+  "name": "csharp-ls-lsp",
+  "version": "0.1.0",
+  "description": "C# code intelligence from csharp-ls, loading the solution nearest the project root and never one inside .claude/worktrees",
+  "author": {
+    "name": "Kacper Harabasz"
+  },
+  "license": "MIT",
+  "lspServers": {
+    "csharp": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/start.mjs", "${CLAUDE_PROJECT_DIR}"],
+      "extensionToLanguage": {
+        ".cs": "csharp"
+      },
+      "startupTimeout": 120000
+    }
+  }
+}
