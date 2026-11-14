@@ -1,0 +1,27 @@
+{
+  "name": "yaml-lsp",
+  "version": "0.1.0",
+  "description": "YAML diagnostics from yaml-language-server, checking GitHub Actions workflows, Compose files and Dependabot config against their SchemaStore schemas",
+  "author": {
+    "name": "Kacper Harabasz"
+  },
+  "license": "MIT",
+  "lspServers": {
+    "yaml": {
+      "command": "yaml-language-server",
+      "args": ["--stdio"],
+      "extensionToLanguage": {
+        ".yml": "yaml",
+        ".yaml": "yaml"
+      },
+      "settings": {
+        "yaml": {
+          "validate": true,
+          "schemaStore": {
+            "enable": true
+          }
+        }
+      }
+    }
+  }
+}
