@@ -22,9 +22,27 @@ Reviews a blog post, essay or article with four reviewer agents on different mod
 
 Generates raster images (art, textures, frames, ornaments, scenes) with ChatGPT in the browser and saves each one into the project, for when Claude needs an image and has no generator of its own. It sends one image per prompt, because ChatGPT spreads quality across every image in a request. It asks for standalone assets rather than mockups, and it saves each image with ChatGPT's own Download button. A script then moves the file from Downloads into the project, picking it up even while the browser still holds it as a `.tmp`. You sign in to ChatGPT yourself. It prefers Claude in Chrome, which saves without asking, because the desktop app's built-in browser asks you to accept every download. Invoke it with `/chatgpt-image` or ask Claude to make an image with ChatGPT.
 
+## Language servers
+
+### ts7-lsp
+
+TypeScript and JavaScript code intelligence (find references, go to definition, hover, diagnostics after edits) from the language server built into TypeScript 7's `tsc`, which it runs as `tsc --lsp --stdio`. The official `typescript-lsp` plugin runs `typescript-language-server`, which needs a TypeScript with `tsserver`; TypeScript 7 ships only `tsc`, so with a global TypeScript 7 that server fails to start from a repository root. This plugin uses TypeScript 7's own server instead, and it also serves projects that build with TypeScript 6 or older.
+
+It needs TypeScript 7 or later as the `tsc` on your `PATH`:
+
+```bash
+npm install -g typescript@7
+```
+
+Disable `typescript-lsp` if you have it, so only one server claims `.ts` and `.js` files:
+
+```bash
+claude plugin disable typescript-lsp@claude-plugins-official
+```
+
 ## Install
 
-At the prompt of a terminal session (swap `humanizer` for `plain-direct-voice`, `writing-quorum-review` or `chatgpt-image` as needed):
+At the prompt of a terminal session (swap `humanizer` for `plain-direct-voice`, `writing-quorum-review`, `chatgpt-image` or `ts7-lsp` as needed):
 
 ```
 /plugin install humanizer --marketplace kharabasz/claude-toolkit
@@ -40,7 +58,7 @@ In the desktop app, where `/plugin` does not run: click **+** next to the prompt
 
 ## Developing
 
-Each skill plugin lives in `skills/<name>/`. Check one with:
+Each skill plugin lives in `skills/<name>/`, and each language server plugin in `lsp/<name>/`. Check one with:
 
 ```bash
 claude plugin validate skills/humanizer

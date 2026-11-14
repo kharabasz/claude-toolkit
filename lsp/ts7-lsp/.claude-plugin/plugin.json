@@ -1,0 +1,25 @@
+{
+  "name": "ts7-lsp",
+  "version": "0.1.0",
+  "description": "TypeScript and JavaScript code intelligence from the language server built into TypeScript 7's tsc (tsc --lsp)",
+  "author": {
+    "name": "Kacper Harabasz"
+  },
+  "license": "MIT",
+  "lspServers": {
+    "typescript": {
+      "command": "tsc",
+      "args": ["--lsp", "--stdio"],
+      "extensionToLanguage": {
+        ".ts": "typescript",
+        ".tsx": "typescriptreact",
+        ".mts": "typescript",
+        ".cts": "typescript",
+        ".js": "javascript",
+        ".jsx": "javascriptreact",
+        ".mjs": "javascript",
+        ".cjs": "javascript"
+      }
+    }
+  }
+}

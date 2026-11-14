@@ -23,6 +23,11 @@
       "name": "chatgpt-image",
       "source": "./skills/chatgpt-image",
       "description": "Skill that generates raster images with ChatGPT in the browser, one image per prompt, and saves each one into the project"
+    },
+    {
+      "name": "ts7-lsp",
+      "source": "./lsp/ts7-lsp",
+      "description": "TypeScript and JavaScript code intelligence from the language server built into TypeScript 7's tsc (tsc --lsp)"
     }
   ]
 }
