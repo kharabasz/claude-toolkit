@@ -28,6 +28,11 @@
       "name": "ts7-lsp",
       "source": "./lsp/ts7-lsp",
       "description": "TypeScript and JavaScript code intelligence from the language server built into TypeScript 7's tsc (tsc --lsp)"
+    },
+    {
+      "name": "csharp-ls-lsp",
+      "source": "./lsp/csharp-ls-lsp",
+      "description": "C# code intelligence from csharp-ls, loading the solution nearest the project root and never one inside .claude/worktrees"
     }
   ]
 }
