@@ -98,9 +98,21 @@ Each skill plugin lives in `skills/<name>/`, and each language server plugin in 
 claude plugin validate skills/humanizer
 ```
 
-Run the launcher tests with:
+Run the tests with:
 
 ```bash
-node --test "lsp/**/*.test.mjs"
+node --test "lsp/**/*.test.mjs" "scripts/*.test.mjs"
 ```
+
+### Leak check
+
+This repository is public. Its git hooks block a commit, a commit message or a push that names one of your private repositories, your git email or your home folder, or holds something shaped like an access key. Turn them on once per clone:
+
+```bash
+sh scripts/install-hooks.sh
+```
+
+The script asks `gh` for the private repositories of your account and its organizations and writes the pattern to `~/.config/public-leak-check/pattern`, outside the repository, so the repository never lists them. Run it again after you add a private repository. Next to the pattern, an `extra` file adds names of your own, one per line, and a `skip` file drops names that are ordinary words.
+
+The hooks see only commits made in a local clone. A commit made through the GitHub API skips them.
 
