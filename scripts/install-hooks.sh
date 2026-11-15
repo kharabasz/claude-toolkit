@@ -1,4 +1,6 @@
 #!/bin/sh
-# Points this clone at .githooks/. Run once per clone.
+set -e
+cd "$(git rev-parse --show-toplevel)"
+node scripts/leak-pattern.mjs
 git config core.hooksPath .githooks
-echo "hooks on. Pattern file: ${LEAK_PATTERN_FILE:-$HOME/.config/public-leak-check/pattern}"
+echo "hooks on: .githooks"
