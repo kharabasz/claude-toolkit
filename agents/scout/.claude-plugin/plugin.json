@@ -1,0 +1,9 @@
+{
+  "name": "scout",
+  "version": "0.1.0",
+  "description": "A read-only Haiku code scout subagent, and a gate hook that sends the main thread's code searches and large reads to it",
+  "author": {
+    "name": "Kacper Harabasz"
+  },
+  "license": "MIT"
+}

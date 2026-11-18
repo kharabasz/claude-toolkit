@@ -22,7 +22,61 @@ Reviews a blog post, essay or article with four reviewer agents on different mod
 
 Generates raster images (art, textures, frames, ornaments, scenes) with ChatGPT in the browser and saves each one into the project, for when Claude needs an image and has no generator of its own. It sends one image per prompt, because ChatGPT spreads quality across every image in a request. It asks for standalone assets rather than mockups, and it saves each image with ChatGPT's own Download button. A script then moves the file from Downloads into the project, picking it up even while the browser still holds it as a `.tmp`. You sign in to ChatGPT yourself. It prefers Claude in Chrome, which saves without asking, because the desktop app's built-in browser asks you to accept every download. Invoke it with `/chatgpt-image` or ask Claude to make an image with ChatGPT.
 
+## Agents
+
+### scout
+
+A read-only code scout, `scout:scout`, on Haiku at low effort, with `Read`, `Grep`, `Glob` and `LSP` only. It answers one question about the code, such as where something is defined, every use of a symbol or how a flow works, with paths, line numbers and short excerpts, in at most 300 words.
+
+Whatever the main thread searches and reads stays in its context and is paid for again on every later request. The scout reads in its own context and hands back only the answer. In an experiment on three coding tasks with Opus as the main thread, a Haiku scout that did all the searching and exploratory reading cut the cost of a task by 21% to 32%, and every result still passed its hidden tests. A Sonnet scout cost more and saved the main thread almost nothing.
+
+To find every use of a symbol, the scout runs `LSP` `findReferences` on its definition and repeats it until the count stops changing, because a language server that is still loading returns a partial list without an error. Install a language server plugin for each language you work in, such as the ones below. Without one the scout falls back to `Grep` and says so.
+
+The plugin's `PreToolUse` hook, the scout gate, sends the main thread to the scout. In the main thread, inside the project, it denies:
+
+- `Grep` of more than one file, and `Glob`;
+- a whole-file `Read` of a file over 300 lines, other than images, PDFs and notebooks;
+- shell searches of project files, such as `grep -r`, `rg`, `git grep`, `find`, `fd`, `ls -R`, `Get-ChildItem -Recurse` and `Select-String`, also inside `$(…)` and `<(…)`;
+- shell reads, such as `cat`, `head`, `tail`, `sed -n` and `Get-Content`, that show more than 300 lines across all the files they name, counting a `| head` or `| Select-Object -First` that trims them.
+
+It allows a ranged `Read`, `Grep` of one file, a shell search of up to three named files, `git grep … -- <files>`, anything outside the project, a `grep` that filters another command's output, and commands that read no code. It follows `cd`, `~`, `$HOME`, variables set earlier in the command and Git Bash drive paths such as `/c/repo`. A path with a variable it cannot resolve passes. Subagents are never denied a search.
+
+For every agent, the gate also denies a `Read` that would return more than 40 KB, whole or ranged, in the project, in Claude Code's saved tool output (`tool-results/`) and in [spend-bar](https://github.com/kharabasz/spend-bar)'s saved shell output. A file with long lines passes the line limit while one range of it fills the context. The denial says how many lines fit, or, when one line alone is over the cap, to Grep the file.
+
+Every denial names the way through. Set these in your shell or in the `env` block of `settings.json`:
+
+- `SCOUT_GATE=off` turns the gate off;
+- `SCOUT_GATE_MAX_BYTES=<n>` sets the byte cap, and `0` turns it off.
+
+It needs Node.js. The gate never fails a tool call on an error of its own.
+
 ## Language servers
+
+### Using them in a project
+
+Enable the plugins in the project's committed `.claude/settings.json`, so everyone who works on it gets the same servers. Pin the marketplace to a commit with `ref`, so new plugin code reaches the project only through a reviewed change, and turn off the official plugins these replace, so no file type gets two servers:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "claude-toolkit": {
+      "source": { "source": "github", "repo": "kharabasz/claude-toolkit", "ref": "<commit>" }
+    }
+  },
+  "enabledPlugins": {
+    "scout@claude-toolkit": true,
+    "csharp-ls-lsp@claude-toolkit": true,
+    "ts7-lsp@claude-toolkit": true,
+    "yaml-lsp@claude-toolkit": true,
+    "csharp-lsp@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": false
+  }
+}
+```
+
+Each developer still installs the servers' binaries, listed under each plugin below. For plain JavaScript, such as a `scripts/` folder of Node scripts, add a `jsconfig.json` with `allowJs` and without `checkJs`, so that `findReferences` sees the whole folder and not one file at a time.
+
+Only C# and YAML diagnostics reach the model after an edit. TypeScript 7's server pushes none, and Claude Code's client only receives pushed diagnostics, so TypeScript type errors show up in the build.
 
 ### ts7-lsp
 
@@ -76,7 +130,7 @@ npm install -g yaml-language-server
 
 ## Install
 
-At the prompt of a terminal session (swap `humanizer` for `plain-direct-voice`, `writing-quorum-review`, `chatgpt-image`, `ts7-lsp`, `csharp-ls-lsp` or `yaml-lsp` as needed):
+At the prompt of a terminal session (swap `humanizer` for `plain-direct-voice`, `writing-quorum-review`, `chatgpt-image`, `scout`, `ts7-lsp`, `csharp-ls-lsp` or `yaml-lsp` as needed):
 
 ```
 /plugin install humanizer --marketplace kharabasz/claude-toolkit
@@ -92,7 +146,7 @@ In the desktop app, where `/plugin` does not run: click **+** next to the prompt
 
 ## Developing
 
-Each skill plugin lives in `skills/<name>/`, and each language server plugin in `lsp/<name>/`. Check one with:
+Each skill plugin lives in `skills/<name>/`, each agent plugin in `agents/<name>/`, and each language server plugin in `lsp/<name>/`. Check one with:
 
 ```bash
 claude plugin validate skills/humanizer
@@ -101,7 +155,7 @@ claude plugin validate skills/humanizer
 Run the tests with:
 
 ```bash
-node --test "lsp/**/*.test.mjs" "scripts/*.test.mjs"
+node --test "agents/**/*.test.mjs" "lsp/**/*.test.mjs" "scripts/*.test.mjs"
 ```
 
 ### Leak check
