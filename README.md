@@ -158,6 +158,8 @@ Run the tests with:
 node --test "agents/**/*.test.mjs" "lsp/**/*.test.mjs" "scripts/*.test.mjs"
 ```
 
+CI runs the tests on Ubuntu and Windows, and validates the marketplace and every plugin, on each push to a branch and on each pull request.
+
 ### Leak check
 
 This repository is public. Its git hooks block a commit, a commit message or a push that names one of your private repositories, your git email or your home folder, or holds something shaped like an access key. Turn them on once per clone:
