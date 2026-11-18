@@ -25,6 +25,11 @@
       "description": "Skill that generates raster images with ChatGPT in the browser, one image per prompt, and saves each one into the project"
     },
     {
+      "name": "scout",
+      "source": "./agents/scout",
+      "description": "A read-only Haiku code scout subagent, and a gate hook that sends the main thread's code searches and large reads to it"
+    },
+    {
       "name": "ts7-lsp",
       "source": "./lsp/ts7-lsp",
       "description": "TypeScript and JavaScript code intelligence from the language server built into TypeScript 7's tsc (tsc --lsp)"
