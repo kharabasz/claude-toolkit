@@ -6,9 +6,9 @@ Skills and other tools for Claude Code, published as a plugin marketplace. The s
 
 ### humanizer
 
-Rewrites AI-sounding prose so it reads like the writer without changing what it says: contrasts, one-line closers, forced triads, dashes, inflated claims, stock AI words, decorative formatting and chat leftovers. Invoke it with `/humanizer` or ask Claude to humanize a piece of text.
+Rewrites AI-sounding prose so it reads like the writer without changing what it says: contrasts, one-line closers, forced triads, dashes, inflated claims, stock AI words, decorative formatting and chat leftovers. It also enforces paragraph rhythm (one-sentence paragraphs alternating with three- or four-sentence ones, no two sentences in a row opening the same way) and bans echoes: paragraphs that end on their own summary or open by restating the one before, and sections that argue the same point. Invoke it with `/humanizer` or ask Claude to humanize a piece of text.
 
-Imported unchanged from [blader/humanizer](https://github.com/blader/humanizer) (v3.1.0, commit `8c307f3`), MIT licensed, © 2025 Siqi Chen. Its own licence is in `skills/humanizer/LICENSE`.
+Imported from [blader/humanizer](https://github.com/blader/humanizer) (v3.1.0, commit `8c307f3`), MIT licensed, © 2025 Siqi Chen. Version 3.2.0 adds the rhythm and no-echo rules here (§7 and §27 to §29); everything else is unchanged from upstream. Its own licence is in `skills/humanizer/LICENSE`.
 
 ### plain-direct-voice
 
