@@ -6,13 +6,13 @@ Skills and other tools for Claude Code, published as a plugin marketplace. The s
 
 ### humanizer
 
-Rewrites AI-sounding prose so it reads like the writer without changing what it says: contrasts, one-line closers, forced triads, dashes, inflated claims, stock AI words, decorative formatting and chat leftovers. It also enforces paragraph rhythm (one-sentence paragraphs alternating with three- or four-sentence ones, no two sentences in a row opening the same way) and bans echoes: paragraphs that end on their own summary or open by restating the one before, and sections that argue the same point. Invoke it with `/humanizer` or ask Claude to humanize a piece of text.
+Rewrites AI-sounding prose so it reads like the writer without changing what it says: contrasts, one-line closers, forced triads, dashes, inflated claims, stock AI words, decorative formatting and chat leftovers. It also checks paragraph rhythm (no runs of same-length paragraphs, nothing over four sentences, no two sentences in a row opening with the same word) and bans echoes: paragraphs that end on their own summary or open by restating the one before, and sections that argue the same point. Invoke it with `/humanizer` or ask Claude to humanize a piece of text.
 
-Imported from [blader/humanizer](https://github.com/blader/humanizer) (v3.1.0, commit `8c307f3`), MIT licensed, © 2025 Siqi Chen. Version 3.2.0 adds the rhythm and no-echo rules here (§7 and §27 to §29); everything else is unchanged from upstream. Its own licence is in `skills/humanizer/LICENSE`.
+Imported from [blader/humanizer](https://github.com/blader/humanizer) (v3.1.0, commit `8c307f3`), MIT licensed, © 2025 Siqi Chen. Versions 3.2.0 and 3.3.0 add the rhythm, no-echo and section-order rules here (§7 and §27 to §29); everything else is unchanged from upstream. Its own licence is in `skills/humanizer/LICENSE`.
 
 ### plain-direct-voice
 
-Writes and edits blog posts and essays in a plain, direct voice: plain assertions, everyday words, no callbacks or wordplay, light on research, other people's stories told second-hand, and endings that state the practice. The rules and examples come from a writer's edits to [Token boxing](https://codingthinks.com/ai/token-boxing/). It flags once when a plainer word changes what a source says. Use it with humanizer: humanizer removes AI habits, and this skill is the writer's sample it matches. Invoke it with `/plain-direct-voice` or ask Claude to write in a plain, direct voice. Not for code, commit messages or pull requests.
+Writes and edits blog posts and essays in a plain, direct voice: plain assertions, everyday words, no callbacks or wordplay, light on research, other people's stories told second-hand, each point said once, instructions instead of personal habits, American English, and endings that state the practice. The rules and examples come from a writer's edits to [Token boxing](https://codingthinks.com/ai/token-boxing/) and [Code archeology](https://codingthinks.com/ai/code-archeology/). It flags once when a plainer word changes what a source says. Use it with humanizer: humanizer removes AI habits, and this skill is the writer's sample it matches. Invoke it with `/plain-direct-voice` or ask Claude to write in a plain, direct voice. Not for code, commit messages or pull requests.
 
 ### writing-quorum-review
 
