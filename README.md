@@ -12,7 +12,7 @@ Based on [blader/humanizer](https://github.com/blader/humanizer) (v3.1.0, commit
 
 ### plain-direct-voice
 
-Writes and edits blog posts and essays in a plain, direct voice: plain assertions, everyday words, no callbacks or wordplay, light on research, other people's stories told second-hand, each point said once, instructions instead of personal habits, American English, and endings that state the practice. The rules and examples come from a writer's edits to [Token boxing](https://codingthinks.com/ai/token-boxing/) and [Code archeology](https://codingthinks.com/ai/code-archeology/). It flags once when a plainer word changes what a source says. Use it with humanizer: humanizer removes AI habits, and this skill is the writer's sample it matches. Invoke it with `/plain-direct-voice` or ask Claude to write in a plain, direct voice. Not for code, commit messages or pull requests.
+Writes and edits blog posts and essays in a plain, direct voice: plain assertions, everyday words, no callbacks or wordplay, light on research, other people's stories told second-hand, instructions instead of personal habits, American English, and endings that state the practice. The rules and examples come from a writer's edits to [Token boxing](https://codingthinks.com/ai/token-boxing/) and [Code archeology](https://codingthinks.com/ai/code-archeology/). It flags once when a plainer word changes what a source says. Use it with humanizer: humanizer removes AI habits, and this skill is the writer's sample it matches. Invoke it with `/plain-direct-voice` or ask Claude to write in a plain, direct voice. Not for code, commit messages or pull requests.
 
 ### writing-quorum-review
 
