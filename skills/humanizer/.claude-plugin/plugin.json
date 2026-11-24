@@ -1,6 +1,6 @@
 {
   "name": "humanizer",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "description": "Rewrite AI-sounding text so it reads like the writer without changing what it says",
   "author": { "name": "blader", "url": "https://github.com/blader" },
   "homepage": "https://github.com/blader/humanizer",
